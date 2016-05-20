@@ -42,23 +42,25 @@ public class CommunicationThread extends Thread {
                 BufferedReader bufferedReader = Utilities.getReader(socket);
                 PrintWriter printWriter = Utilities.getWriter(socket);
                 if (bufferedReader != null && printWriter != null) {
-                    Log.i(Constants.TAG, "[COMMUNICATION THREAD] Waiting for parameters from client (city / information type)!");
+                    Log.i(Constants.TAG, "[COMMUNICATION THREAD] Waiting for parameters from client !");
                     String informationType = bufferedReader.readLine();
+                    System.out.println(informationType);
                     HashMap<String, String> data = serverThread.getData();
                     String timeInformation = null;
 
-                    if (informationType != null && !informationType.isEmpty()) {
-                        if (informationType.equals("gettime")) {
-                            HttpClient httpClient = new DefaultHttpClient();
-                            HttpGet httpGet = new HttpGet("http://www.timeapi.org/utc/now");
 
-                            ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                            String content = httpClient.execute(httpGet, responseHandler);
+                    if (informationType.contains("gettime")) {
 
-                            printWriter.println("succesful");
-                            printWriter.flush();
-                        }
+                        HttpClient httpClient = new DefaultHttpClient();
+                        HttpGet httpGet = new HttpGet("http://www.timeapi.org/utc/now");
+
+                        ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                        String content = httpClient.execute(httpGet, responseHandler);
+                        System.out.println(content);
+                        printWriter.println(content);
+                        printWriter.flush();
                     }
+
                 }
 
                 socket.close();
