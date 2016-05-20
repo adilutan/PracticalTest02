@@ -1,2 +1,3 @@
 # PracticalTest02
-Colocviu final EIM
+Lutan Adrian Mirel
+343 C1
